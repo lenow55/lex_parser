@@ -6,7 +6,8 @@ add_library(${PROJECT_NAME}
 )
 
 add_subdirectory(../builder builder)
+#add_subdirectory(../states states)
 
-target_link_libraries(${PROJECT_NAME} builder)
+target_link_libraries(${PROJECT_NAME} builder states)
 target_include_directories(${PROJECT_NAME} PUBLIC . )
 

@@ -11,52 +11,31 @@
  ==================================================== */
 
 #include "A_state.h"
-///**
-// * Базовый класс Состояния объявляет методы, которые должны реализовать все
-// * Конкретные Состояния, а также предоставляет обратную ссылку на объект
-// * Контекст, связанный с Состоянием. Эта обратная ссылка может использоваться
-// * Состояниями для передачи Контекста другому Состоянию.
-// */
-//
-//class ConcreteStateA : public State {
-// public:
-//  void Handle1() override;
-//
-//  void Handle2() override {
-//    std::cout << "ConcreteStateA handles request2.\n";
-//  }
-//};
-//
-//class ConcreteStateB : public State {
-// public:
-//  void Handle1() override { std::cout << "ConcreteStateB handles request1.\n";
-//  }
-//  void Handle2() override {
-//    std::cout << "ConcreteStateB handles request2.\n";
-//    std::cout << "ConcreteStateB wants to change the state of the context.\n";
-//    this->context_->TransitionTo(new ConcreteStateA);
-//  }
-//};
-//
-//void ConcreteStateA::Handle1() {
-//  {
-//    std::cout << "ConcreteStateA handles request1.\n";
-//    std::cout << "ConcreteStateA wants to change the state of the context.\n";
-//
-//    this->context_->TransitionTo(new ConcreteStateB);
-//  }
-//}
-//
-///**
-// * Клиентский код.
-// */
-//void ClientCode() {
-//  LexerContext *context = new LexerContext(new ConcreteStateA);
-//  context->Request1();
-//  context->Request2();
-//  delete context;
-//}
+#include <fstream>
+#include <iostream>
+#include "Context.h"
 
-int main() {
-  return 0;
+using std::cout;
+
+int main(int argc, char* argv[]) {
+    if (argc != 3) {
+        cout << "Usage: ./program <in_file> <out_file>\n";
+        return 1;
+    }
+
+    const char* filename = argv[1];
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        cout << "Failed to open file: " << filename << "\n";
+        return 1;
+    }
+
+    char ch;
+    while (file.good()) {
+        cout << ch;
+    }
+
+    file.close();
+    return 0;
 }

@@ -10,12 +10,11 @@
  * Platform: Linux
  ==================================================== */
 
-#pragma once
+#include "A_state.h"
 
-class LexerContext;
-
-class State {
+class CommentState : public State {
     public:
-        virtual void handle(char, LexerContext*) = 0;
-        virtual ~State() {}
+        ~CommentState() override {}
+        virtual void handle(char, LexerContext*) override;
 };
+

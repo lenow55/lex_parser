@@ -13,28 +13,34 @@
 
 #include <cstddef>
 #include <string>
-#include "Token.h"
 
 using std::string;
 using std::size_t;
 
-class TokenBuilder {
-    protected:
+enum TokenType {
+    IDENTIFIER,
+    KEYWORD,
+    NUMBER,
+    STRING,
+    OPERATOR,
+    DELIMITER,
+    COMMENT,
+    COMPARE,
+    NOTYPE //заглушка для создателя
+};
+
+class Token {
+    private:
         TokenType token_type_;
         string token_value_;
         size_t line_number_;
         size_t column_number_;
-
     public:
-        TokenBuilder():
-            token_type_(NOTYPE),
-            token_value_(""),
-            line_number_(0),
-            column_number_(0) {}
-        ~TokenBuilder();
-        void setType(TokenType);
-        void setPosition(size_t, size_t);
-        void addValue(char);
-        void clearValue();
-        Token build();
+        Token(TokenType token_type, const string& token_value,
+                size_t line_number, size_t column_number):
+            token_type_(token_type), token_value_(token_value),
+            line_number_(line_number), column_number_(column_number) {}
+
 };
+
+std::ostream &operator<<(std::ostream &, const Token &);

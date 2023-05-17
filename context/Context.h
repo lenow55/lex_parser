@@ -8,6 +8,8 @@
 
 #include "TokenBuilder.h"
 #include <cstddef>
+#include <fstream>
+#include <memory>  // Добавлен заголовочный файл memory
 
 using std::size_t;
 
@@ -15,40 +17,39 @@ class State;
 class TokenBuilder;
 
 class LexerContext {
-  /**
-   * @var State Ссылка на текущее состояние Контекста.
-   */
- private:
-  State *state_;
-  size_t line_number_;
-  size_t column_number_;
-  TokenBuilder *token_builder_;
+    /**
+     * @var State Ссылка на текущее состояние Контекста.
+     */
+    private:
+        std::ifstream file;       // Файловый поток
+        size_t line;                 // Текущий номер строки
+        size_t column;               // Текущий номер колонки
+        char currentChar;         // Текущий символ
+        std::unique_ptr<State> currentState;      // Текущее состояние
+        TokenBuilder *tokenBuilder;
 
- public:
-  LexerContext() : state_(nullptr), line_number_(0), column_number_(0),
-    token_builder_(nullptr){}
-  LexerContext(State *state) : state_(nullptr), line_number_(0), column_number_(0) {
-    this->TransitionTo(state);
-  }
-  ~LexerContext() {
-    delete state_;
-    delete token_builder_;
-  }
-  /**
-   * Контекст позволяет изменять объект Состояния во время выполнения.
-   */
-  void TransitionTo(State *state) {
-    std::cout << "Context: Transition to " << typeid(*state).name() << ".\n";
-    if (this->state_ != nullptr)
-      delete this->state_;
-    this->state_ = state;
-    this->state_->set_context(this);
-  }
-  /**
-   * Контекст делегирует часть своего поведения текущему объекту Состояния.
-   */
-  void Request1() {
-    this->state_->Handle1();
-  }
+    public:
+        LexerContext() :
+            currentState(nullptr),
+            tokenBuilder(nullptr),
+            line(0),
+            column(0){}
+        ~LexerContext() {
+            delete tokenBuilder;
+        }
+        void TransitionTo(State *, const char *);
+        void setState(std::unique_ptr<State>);
+        void setTokenBuilder(TokenBuilder*);
+        void initTokenBuilder();
+        void createTokenBuilder();
+        TokenBuilder *getTokenBuilder();
+        State *getState() const;
+        void processFile();
+        void setState(State*);
+        bool isEOF() const;
+        size_t getColumn() const;
+        size_t getLine() const;
+        void moveToNextChar();
+        void setFile(const string&);
 };
 

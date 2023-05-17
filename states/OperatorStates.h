@@ -10,11 +10,16 @@
  * Platform: Linux
  ==================================================== */
 
+#pragma once
+
 #include "A_state.h"
 
-class ConcreteStateA : public State {
+class LexerContext;
+
+class CompareState : public State {
  public:
-  void Handle() override {
-    std::cout << "ConcreteStateA handles request2.\n";
-  }
+  ~CompareState() override {}
+  virtual void handle(char, LexerContext*) override;
 };
+
+

@@ -12,10 +12,13 @@
 
 #pragma once
 
+#include "A_state.h"
+
 class LexerContext;
 
-class State {
-    public:
-        virtual void handle(char, LexerContext*) = 0;
-        virtual ~State() {}
+class StartState : public State {
+ public:
+  ~StartState() override {}
+  virtual void handle(char, LexerContext*) override;
 };
+
