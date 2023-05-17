@@ -4,7 +4,15 @@
  * состояние Контекста.
  */
 
+#pragma once
+
+#include "TokenBuilder.h"
+#include <cstddef>
+
+using std::size_t;
+
 class State;
+class TokenBuilder;
 
 class LexerContext {
   /**
@@ -12,14 +20,19 @@ class LexerContext {
    */
  private:
   State *state_;
+  size_t line_number_;
+  size_t column_number_;
+  TokenBuilder *token_builder_;
 
  public:
-  LexerContext() : state_(nullptr) {}
-  LexerContext(State *state) : state_(nullptr) {
+  LexerContext() : state_(nullptr), line_number_(0), column_number_(0),
+    token_builder_(nullptr){}
+  LexerContext(State *state) : state_(nullptr), line_number_(0), column_number_(0) {
     this->TransitionTo(state);
   }
   ~LexerContext() {
     delete state_;
+    delete token_builder_;
   }
   /**
    * Контекст позволяет изменять объект Состояния во время выполнения.

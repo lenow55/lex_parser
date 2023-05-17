@@ -4,6 +4,9 @@ add_library(${PROJECT_NAME}
 	STATIC
 	context.cpp
 )
-target_link_libraries(${PROJECT_NAME})
+
+add_subdirectory(../builder builder)
+
+target_link_libraries(${PROJECT_NAME} builder)
 target_include_directories(${PROJECT_NAME} PUBLIC . )
 
