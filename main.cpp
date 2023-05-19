@@ -11,31 +11,34 @@
  ==================================================== */
 
 #include "A_state.h"
+#include <exception>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include "Context.h"
 
 using std::cout;
+using std::cerr;
+using std::endl;
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        cout << "Usage: ./program <in_file> <out_file>\n";
+    if (argc != 2) {
+        cout << "Usage: ./program <in_file>\n";
         return 1;
     }
 
-    const char* filename = argv[1];
-    std::ifstream file(filename);
-
-    if (!file.is_open()) {
-        cout << "Failed to open file: " << filename << "\n";
-        return 1;
+    const string filename = argv[1];
+    LexerContext* mainContext = new LexerContext;
+    try {
+        mainContext->initState();
+        mainContext->initTokenBuilder();
+        mainContext->setFile(filename);
+        mainContext->processFile();
+        mainContext->closeFile();
     }
-
-    char ch;
-    while (file.good()) {
-        cout << ch;
+    catch (std::exception ex) {
+        delete mainContext;
+        cerr << ex.what() << endl;
     }
-
-    file.close();
     return 0;
 }

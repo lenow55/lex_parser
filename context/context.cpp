@@ -1,13 +1,17 @@
 #include "Context.h"
 #include "A_state.h"
+#include "StartState.h"
 #include "TokenBuilder.h"
+#include <iostream>
 #include <stdexcept>
+#include <string>
 
 void LexerContext::setTokenBuilder(TokenBuilder* token_builder) {
     if (this->tokenBuilder != nullptr)
         delete this->tokenBuilder;
     this->tokenBuilder = token_builder;
 }
+
 
 void LexerContext::initTokenBuilder() {
     if (this->tokenBuilder != nullptr)
@@ -24,11 +28,11 @@ size_t LexerContext::getColumn() const {
 }
 
 bool LexerContext::isEOF() const {
-    return file.eof() && currentChar == '\0';
+    return file.eof() && currentChar == '\0' || currentChar == -1;
 }
 
-void LexerContext::setState(std::unique_ptr<State> newState) {
-    currentState = std::move(newState);
+void LexerContext::setState(State *newState) {
+    currentState = std::move(std::unique_ptr<State>(newState));
 }
 
 State* LexerContext::getState() const {
@@ -67,10 +71,31 @@ TokenBuilder *LexerContext::getTokenBuilder() {
 }
 
 void LexerContext::setFile(const string& filename) {
-    file.open(filename);
+    try {
+        file.open(filename);
+    }
+    catch (const std::ifstream::failure& e) {
+        std::cout << "Exception opening/reading file";
+        throw e;
+    }
     if (!file.is_open()) {
-        throw std::runtime_error("Failed to open file: " + filename);
+        std::string errMsg =  "Failed to open file: " + filename;
+        throw std::runtime_error(errMsg);
     } else {
         moveToNextChar();  // Переходим к первому символу при открытии файла
     }
+}
+
+void LexerContext::storeToken() {
+    Token token = this->tokenBuilder->build();
+    std::cout << token;
+}
+
+
+void LexerContext::initState() {
+    this->currentState = std::unique_ptr<State>(new StartState);
+}
+
+void LexerContext::closeFile() {
+    file.close();
 }

@@ -31,11 +31,10 @@ class TokenBuilder {
             token_value_(""),
             line_number_(0),
             column_number_(0) {}
-        ~TokenBuilder();
+        ~TokenBuilder() {};
         void setType(TokenType);
         void setPosition(size_t, size_t);
         void addValue(char);
         void clearValue();
-        //Token build();
-        void build();
+        Token build();
 };

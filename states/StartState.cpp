@@ -1,5 +1,6 @@
 #include "StartState.h"
 #include "CommentState.h"
+#include "ERRORState.h"
 #include "OperatorStates.h"
 #include "KeywordStates.h"
 #include "StringState.h"
@@ -8,6 +9,7 @@
 #include "TokenBuilder.h"
 #include "Context.h"
 #include <cctype>
+#include <iostream>
 
 using std::isdigit;
 using std::isalpha;
@@ -44,6 +46,7 @@ void StartState::handle(char simbol, LexerContext *context) {
             break;
         case '\"':
             context->setState(new StringState);
+            break;
         case ';':
         case '(':
         case ')':
@@ -51,6 +54,8 @@ void StartState::handle(char simbol, LexerContext *context) {
             context->storeToken();
             break;
         case ' ':
+        case '\n':
+        case '\t':
             break;
         case '_':
             context->getTokenBuilder()->setType(IDENTIFIER);
@@ -66,7 +71,9 @@ void StartState::handle(char simbol, LexerContext *context) {
                 context->setState(new IdentifierState);
                 return;
             }
-            throw std::runtime_error(&"ERROR with this simbol: " [ simbol]);
+            //std::cerr << "ERROR with this simbol: " << simbol;
+            context->setState(new ErrorState);
+            // throw;
             break;
     }
     return;

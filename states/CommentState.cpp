@@ -21,7 +21,7 @@ void CommentOperatorState::handle(char simbol, LexerContext *context) {
 void CommentState::handle(char simbol, LexerContext *context) {
     switch (simbol) {
         case '*':
-            context->setState(new CommentState);
+            context->setState(new CommentEndState);
             break;
         default:
             break;

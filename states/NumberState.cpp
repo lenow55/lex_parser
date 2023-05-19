@@ -1,19 +1,23 @@
+#include "NumberState.h"
 #include "StartState.h"
 #include "Token.h"
 #include "TokenBuilder.h"
+#include "ERRORState.h"
 #include "Context.h"
 #include <cctype>
-#include <stdexcept>
 
 using std::isdigit;
 using std::isalpha;
 
-void StartState::handle(char simbol, LexerContext *context) {
+void NumberState::handle(char simbol, LexerContext *context) {
     if (isdigit(simbol)) {
         context->getTokenBuilder()->addValue(simbol);
+        return;
     }
     if (isalpha(simbol) || simbol == '_') {
-        throw std::runtime_error(&"ERROR with this simbol: " [ simbol]);
+        context->getTokenBuilder()->addValue(simbol);
+        context->setState(new ErrorState);
+        return;
     }
     context->getTokenBuilder()->setType(NUMBER);
     context->storeToken();

@@ -10,9 +10,11 @@ void IdentifierState::handle(char simbol, LexerContext *context) {
     if (isalpha(simbol) || isdigit(simbol) || simbol == '_' || simbol == '-') {
         context->getTokenBuilder()->addValue(simbol);
     }
-    context->getTokenBuilder()->setType(IDENTIFIER);
-    context->storeToken();
-    context->setState(new StartState);
-    context->getState()->handle(simbol, context);
+    else {
+        context->getTokenBuilder()->setType(IDENTIFIER);
+        context->storeToken();
+        context->setState(new StartState);
+        context->getState()->handle(simbol, context);
+    }
     return;
 }

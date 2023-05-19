@@ -52,5 +52,7 @@ class LexerContext {
         void moveToNextChar();
         void setFile(const string&);
         void storeToken();
+        void initState();
+        void closeFile();
 };
 

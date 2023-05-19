@@ -4,9 +4,8 @@
       "adapter": "vscode-cpptools",
       "configuration": {
         "request": "launch",
-        "program": "./Debug/main",
-        "args": [ "*${args:--update-gadget-config}" ],
-            "justMyCode#json​": "${justMyCode:true}"
+        "program": "./Debug/lex_analizer",
+        "args": [ "./Debug/test2" ], "justMyCode#json​": "${justMyCode:true}"
           }
         }
     }

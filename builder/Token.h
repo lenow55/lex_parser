@@ -13,6 +13,7 @@
 
 #include <cstddef>
 #include <string>
+#include <ostream>
 
 using std::string;
 using std::size_t;
@@ -24,10 +25,11 @@ enum TokenType {
     STRING,
     OPERATOR,
     DELIMITER,
-    COMMENT,
     COMPARE,
+    ERROR,
     NOTYPE //заглушка для создателя
 };
+
 
 class Token {
     private:
@@ -40,7 +42,11 @@ class Token {
                 size_t line_number, size_t column_number):
             token_type_(token_type), token_value_(token_value),
             line_number_(line_number), column_number_(column_number) {}
+        TokenType getTokenType() const;
+        const string &getTokenValue() const;
+        size_t getline() const;
+        size_t getcolumn() const;
 
 };
 
-std::ostream &operator<<(std::ostream &, const Token &);
+std::ostream &operator<<(std::ostream &os, const Token &token_);
