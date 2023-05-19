@@ -41,7 +41,7 @@ class LexerContext {
         void setState(std::unique_ptr<State>);
         void setTokenBuilder(TokenBuilder*);
         void initTokenBuilder();
-        void createTokenBuilder();
+        void clearTokenBuilder();
         TokenBuilder *getTokenBuilder();
         State *getState() const;
         void processFile();
@@ -51,5 +51,6 @@ class LexerContext {
         size_t getLine() const;
         void moveToNextChar();
         void setFile(const string&);
+        void storeToken();
 };
 

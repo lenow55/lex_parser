@@ -15,7 +15,7 @@ using std::isdigit;
 using std::isalpha;
 
 void StartState::handle(char simbol, LexerContext *context) {
-    context->createTokenBuilder();
+    context->clearTokenBuilder();
     context->getTokenBuilder()->addValue(simbol);
     switch (simbol) {
         case '<':

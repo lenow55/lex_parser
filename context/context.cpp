@@ -55,7 +55,7 @@ void LexerContext::moveToNextChar() {
     }
 }
 
-void LexerContext::createTokenBuilder() {
+void LexerContext::clearTokenBuilder() {
     //this->tokenBuilder = new TokenBuilder;
     this->tokenBuilder->setPosition(this->line, this->column);
     this->tokenBuilder->clearValue();
