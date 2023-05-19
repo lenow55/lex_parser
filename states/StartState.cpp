@@ -1,5 +1,6 @@
 #include "StartState.h"
 #include "CompareState.h"
+#include "CommentState.h"
 #include "OperatorStates.h"
 #include "KeywordStates.h"
 #include "StringState.h"
@@ -24,7 +25,7 @@ void StartState::handle(char simbol, LexerContext *context) {
             break;
         case ':':
             context->getTokenBuilder()->setType(OPERATOR);
-            context->setState(new AssignOperatorStateFirst);
+            context->setState(new AssignState);
             break;
         case '/':
             context->getTokenBuilder()->setType(OPERATOR);
@@ -38,15 +39,15 @@ void StartState::handle(char simbol, LexerContext *context) {
             break;
         case 'e':
             context->getTokenBuilder()->setType(KEYWORD);
-            context->setState(new ElseState);
+            context->setState(new Else1State);
             break;
         case 'i':
             context->getTokenBuilder()->setType(KEYWORD);
-            context->setState(new IfState);
+            context->setState(new If1State);
             break;
         case 't':
             context->getTokenBuilder()->setType(KEYWORD);
-            context->setState(new ThenState);
+            context->setState(new Then1State);
             break;
         case '\"':
             context->getTokenBuilder()->setType(STRING);
@@ -55,13 +56,13 @@ void StartState::handle(char simbol, LexerContext *context) {
         case '(':
         case ')':
             context->getTokenBuilder()->setType(DELIMITER);
-            context->setState(new DelimiterState);
+            // тут надо сразу бахать токена
             break;
         case ' ':
             break;
         case '_':
-            context->getTokenBuilder()->setType(DELIMITER);
-            context->setState(new DelimiterState);
+            context->getTokenBuilder()->setType(IDENTIFIER);
+            context->setState(new IdentifierState);
         default:
             if (isdigit(simbol)) {
                 context->getTokenBuilder()->setType(NUMBER);
@@ -73,7 +74,7 @@ void StartState::handle(char simbol, LexerContext *context) {
                 context->setState(new IdentifierState);
                 return;
             }
-            throw::runtime_error("ERROR with this simbol: " + simbol);
+            throw std::runtime_error(&"ERROR with this simbol: " [ simbol]);
             break;
     }
     return;

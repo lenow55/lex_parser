@@ -16,17 +16,8 @@
 
 class LexerContext;
 
-class AssignOperatorStateFirst : public State {
+class CompareState : public State {
  public:
-  ~AssignOperatorStateFirst() override {}
+  ~CompareState() override {}
   virtual void handle(char, LexerContext*) override;
 };
-
-
-
-class AssignOperatorStateSecond : public State {
- public:
-  ~AssignOperatorStateSecond() override {}
-  virtual void handle(char, LexerContext*) override;
-};
-

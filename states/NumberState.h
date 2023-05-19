@@ -16,9 +16,9 @@
 
 class LexerContext;
 
-class StartState : public State {
+class NumberState : public State {
  public:
-  ~StartState() override {}
+  ~NumberState() override {}
   virtual void handle(char, LexerContext*) override;
 };
 
