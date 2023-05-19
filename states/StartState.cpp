@@ -1,12 +1,10 @@
 #include "StartState.h"
-#include "CompareState.h"
 #include "CommentState.h"
 #include "OperatorStates.h"
 #include "KeywordStates.h"
 #include "StringState.h"
 #include "NumberState.h"
 #include "IdentifierState.h"
-#include "Token.h"
 #include "TokenBuilder.h"
 #include "Context.h"
 #include <cctype>
@@ -51,11 +49,11 @@ void StartState::handle(char simbol, LexerContext *context) {
         case ')':
             context->getTokenBuilder()->setType(DELIMITER);
             context->storeToken();
-            // тут надо сразу бахать токена
             break;
         case ' ':
             break;
         case '_':
+            context->getTokenBuilder()->setType(IDENTIFIER);
             context->setState(new IdentifierState);
         default:
             if (isdigit(simbol)) {

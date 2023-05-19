@@ -16,13 +16,6 @@
 
 class LexerContext;
 
-class OperatorState : public State {
- public:
-  ~OperatorState() override {}
-  virtual void handle(char, LexerContext*) override;
-};
-
-
 class AssignState : public State {
  public:
   ~AssignState() override {}
