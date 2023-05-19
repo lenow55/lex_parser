@@ -36,5 +36,6 @@ class TokenBuilder {
         void setPosition(size_t, size_t);
         void addValue(char);
         void clearValue();
-        Token build();
+        //Token build();
+        void build();
 };
