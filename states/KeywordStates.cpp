@@ -15,7 +15,6 @@ void Else1State::handle(char simbol, LexerContext *context) {
             context->setState(new Else2State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -43,7 +42,6 @@ void Else2State::handle(char simbol, LexerContext *context) {
             context->setState(new Else3State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -69,7 +67,6 @@ void Else3State::handle(char simbol, LexerContext *context) {
             context->setState(new Else4State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -89,7 +86,7 @@ void Else3State::handle(char simbol, LexerContext *context) {
 }
 
 void Else4State::handle(char simbol, LexerContext *context) {
-    if (isdigit(simbol) || isalpha(simbol) || simbol == '-' || simbol == '_') {
+    if (isdigit(simbol) || isalpha(simbol) || simbol == '_') {
         context->getTokenBuilder()->addValue(simbol);
         context->setState(new IdentifierState);
         return;
@@ -108,7 +105,6 @@ void If1State::handle(char simbol, LexerContext *context) {
             context->setState(new If2State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -128,7 +124,7 @@ void If1State::handle(char simbol, LexerContext *context) {
 }
 
 void If2State::handle(char simbol, LexerContext *context) {
-    if (isdigit(simbol) || isalpha(simbol) || simbol == '-' || simbol == '_') {
+    if (isdigit(simbol) || isalpha(simbol) || simbol == '_') {
         context->getTokenBuilder()->addValue(simbol);
         context->setState(new IdentifierState);
         return;
@@ -147,7 +143,6 @@ void Then1State::handle(char simbol, LexerContext *context) {
             context->setState(new Then2State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -172,7 +167,6 @@ void Then2State::handle(char simbol, LexerContext *context) {
             context->setState(new Then3State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -197,7 +191,6 @@ void Then3State::handle(char simbol, LexerContext *context) {
             context->setState(new Then4State);
             break;
         case '_':
-        case '-':
             context->getTokenBuilder()->addValue(simbol);
             context->setState(new IdentifierState);
             break;
@@ -217,7 +210,7 @@ void Then3State::handle(char simbol, LexerContext *context) {
 }
 
 void Then4State::handle(char simbol, LexerContext *context) {
-    if (isdigit(simbol) || isalpha(simbol) || simbol == '-' || simbol == '_') {
+    if (isdigit(simbol) || isalpha(simbol) || simbol == '_') {
         context->getTokenBuilder()->addValue(simbol);
         context->setState(new IdentifierState);
         return;
