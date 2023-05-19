@@ -21,47 +21,41 @@ void StartState::handle(char simbol, LexerContext *context) {
         case '<':
         case '>':
             context->getTokenBuilder()->setType(COMPARE);
-            context->setState(new CompareState);
+            context->storeToken();
             break;
         case ':':
-            context->getTokenBuilder()->setType(OPERATOR);
             context->setState(new AssignState);
             break;
         case '/':
-            context->getTokenBuilder()->setType(OPERATOR);
             context->setState(new CommentOperatorState);
             break;
         case '*':
         case '+':
         case '-':
             context->getTokenBuilder()->setType(OPERATOR);
-            context->setState(new OperatorState);
+            context->storeToken();
             break;
         case 'e':
-            context->getTokenBuilder()->setType(KEYWORD);
             context->setState(new Else1State);
             break;
         case 'i':
-            context->getTokenBuilder()->setType(KEYWORD);
             context->setState(new If1State);
             break;
         case 't':
-            context->getTokenBuilder()->setType(KEYWORD);
             context->setState(new Then1State);
             break;
         case '\"':
-            context->getTokenBuilder()->setType(STRING);
             context->setState(new StringState);
         case ';':
         case '(':
         case ')':
             context->getTokenBuilder()->setType(DELIMITER);
+            context->storeToken();
             // тут надо сразу бахать токена
             break;
         case ' ':
             break;
         case '_':
-            context->getTokenBuilder()->setType(IDENTIFIER);
             context->setState(new IdentifierState);
         default:
             if (isdigit(simbol)) {

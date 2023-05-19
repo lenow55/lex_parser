@@ -11,9 +11,6 @@
 #include "Context.h"
 #include <cctype>
 
-using std::isdigit;
-using std::isalpha;
-
 void CommentOperatorState::handle(char simbol, LexerContext *context) {
     switch (simbol) {
         case '/':
@@ -41,6 +38,13 @@ void CommentState::handle(char simbol, LexerContext *context) {
 }
 
 void CommentEndState::handle(char simbol, LexerContext *context) {
-    if (isdigit(simbol)) {
+    switch (simbol) {
+        case '/':
+            context->setState(new StartState);
+            break;
+        default:
+            context->setState(new CommentState);
+            break;
     }
+    return;
 }
