@@ -1,10 +1,9 @@
-project(builder)			# Название проекта
+project(scope)			# Название проекта
 
 add_library(${PROJECT_NAME}
 	STATIC
-	TokenBuilder.cpp
-	Token.cpp
+	Scope.cpp
 )
-target_link_libraries(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} hashMap)
 target_include_directories(${PROJECT_NAME} PUBLIC . )
 

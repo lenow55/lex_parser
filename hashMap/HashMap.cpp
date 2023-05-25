@@ -9,12 +9,12 @@ Bucket::Bucket() :
     emptySinceStart(true),
     emptySinceRemoval(false) {}
 
-    void Bucket::set(const string &key_, Token* value_) {
-        this->key = key_;
-        this->value = value_;
-        emptySinceStart = false;
-        emptySinceRemoval = false;
-    }
+void Bucket::set(const string &key_, Token* value_) {
+    this->key = key_;
+    this->value = value_;
+    emptySinceStart = false;
+    emptySinceRemoval = false;
+}
 
 void Bucket::remove() {
     key = "";

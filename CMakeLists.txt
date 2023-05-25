@@ -16,6 +16,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(states)
 
 add_subdirectory(context)
+
+add_subdirectory(builder)
+
+add_subdirectory(hashMap)
+
+add_subdirectory(scope)
 #file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "libs/my_string/*.cpp")
 add_executable(${PROJECT_NAME}
     main.cpp
