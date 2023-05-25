@@ -34,6 +34,6 @@ std::ostream &operator<<(std::ostream &os, const Token &token_) {
         << token_.getTokenValue() << "}, "
         << token_.getline() << ", "
         << token_.getcolumn()
-        << ">" << std::endl;
+        << ">";
     return os;
 }

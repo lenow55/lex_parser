@@ -5,7 +5,7 @@
       "configuration": {
         "request": "launch",
         "program": "./Debug/lex_analizer",
-        "args": [ "./Debug/test2" ], "justMyCode#json​": "${justMyCode:true}"
+        "args": [ "./Debug/test" ], "justMyCode#json​": "${justMyCode:true}"
           }
         }
     }

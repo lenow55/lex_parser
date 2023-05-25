@@ -2,6 +2,7 @@
 #include "A_state.h"
 #include "Scope.h"
 #include "StartState.h"
+#include "Token.h"
 #include "TokenBuilder.h"
 #include <iostream>
 #include <stdexcept>
@@ -90,8 +91,10 @@ void LexerContext::setFile(const string& filename) {
 
 void LexerContext::storeToken() {
     Token *token = this->tokenBuilder->buildPTR();
-    this->currentScope->storeToken(token);
-    // std::cout << token;
+    if (token->getTokenType() == IDENTIFIER) {
+        this->currentScope->storeToken(token);
+    }
+    std::cout << *token << std::endl;
 }
 
 
@@ -104,16 +107,20 @@ void LexerContext::closeFile() {
 }
 
 void LexerContext::increaseScope() {
-    this->currentScope->increaseIndex();
     Scope *newScope = new Scope(
             this->currentScope,
             this->currentScope->getLevel() + 1,
-            this->currentScope->getIndex());
+            this->currentScope->getCountChild());
+    this->currentScope->increaseChild();
+    this->currentScope = newScope;
 }
 
 void LexerContext::decreaseScope() {
     Scope *parent = this->currentScope->getParentScope();
-    std::cout << *(this->currentScope);
+    std::cout
+        << "\n===============================\n"
+        << *(this->currentScope)
+        << "===============================" << std::endl;
     delete this->currentScope;
     this->currentScope = parent;
 }

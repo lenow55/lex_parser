@@ -10,7 +10,7 @@ Scope::Scope(Scope *parent_, size_t level_, size_t index_) :
     hash_table(new HashMap){}
 
 void Scope::storeToken(Token *token) {
-    if (!parent_scope->lookUpCheck(token->getTokenValue())) {
+    if (!this->lookUpCheck(token->getTokenValue())) {
         hash_table->set(token->getTokenValue(), token);
     }
 }
@@ -18,6 +18,9 @@ void Scope::storeToken(Token *token) {
 bool Scope::lookUpCheck(const string &key) {
     if (hash_table->lookUpCheck(key)) {
         return true;
+    }
+    if (parent_scope == nullptr) {
+        return false;
     }
     if (parent_scope->lookUpCheck(key)) {
         return true;
@@ -41,8 +44,12 @@ size_t Scope::getIndex() {
     return this->index;
 }
 
-void Scope::increaseIndex() {
-    ++this->index;
+size_t Scope::getCountChild() {
+    return this->count_child;
+}
+
+void Scope::increaseChild() {
+    ++this->count_child;
 }
 
 std::ostream &operator<<(std::ostream &os, const Scope &scope) {

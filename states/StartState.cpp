@@ -65,10 +65,12 @@ void StartState::handle(char simbol, LexerContext *context) {
             context->getTokenBuilder()->setType(DELIMITER);
             context->storeToken();
             context->increaseScope();
+            break;
         case '}':
             context->getTokenBuilder()->setType(DELIMITER);
             context->storeToken();
             context->decreaseScope();
+            break;
         // end add scope
         default:
             if (isdigit(simbol)) {

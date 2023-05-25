@@ -24,6 +24,7 @@ class Scope {
         Scope *getParentScope();
         size_t getLevel();
         size_t getIndex();
-        void increaseIndex();
+        size_t getCountChild();
+        void increaseChild();
         friend std::ostream &operator<<(std::ostream &, const Scope &);
 };
