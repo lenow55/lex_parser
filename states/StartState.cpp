@@ -60,6 +60,16 @@ void StartState::handle(char simbol, LexerContext *context) {
         case '_':
             context->getTokenBuilder()->setType(IDENTIFIER);
             context->setState(new IdentifierState);
+        // add scope handler
+        case '{':
+            context->getTokenBuilder()->setType(DELIMITER);
+            context->storeToken();
+            context->increaseScope();
+        case '}':
+            context->getTokenBuilder()->setType(DELIMITER);
+            context->storeToken();
+            context->decreaseScope();
+        // end add scope
         default:
             if (isdigit(simbol)) {
                 context->getTokenBuilder()->setType(NUMBER);

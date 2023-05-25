@@ -8,6 +8,8 @@ void ErrorState::handle(char simbol, LexerContext *context) {
         case ';':
         case ')':
         case '(':
+        case '{':
+        case '}':
         case '\n':
         case '\t':
         case '\0':
@@ -15,6 +17,8 @@ void ErrorState::handle(char simbol, LexerContext *context) {
             context->getTokenBuilder()->setType(ERROR);
             context->storeToken();
             context->setState(new StartState);
+            // поправил обработку
+            context->getState()->handle(simbol, context);
             break;
         default:
             context->getTokenBuilder()->addValue(simbol);
