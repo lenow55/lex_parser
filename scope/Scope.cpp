@@ -1,29 +1,22 @@
 #include "Scope.h"
+#include "Token.h"
 #include <cstddef>
-/*
-void TokenBuilder::setType(TokenType type) {
-    this->token_type_ = type;
+
+Scope::Scope(Scope *parent_, const string& level_) :
+    parent_scope(parent_), level(level_), hash_table(new HashMap){}
+
+void Scope::storeToken(Token *token) {
+    if (!parent_scope->lookUpCheck(token->getTokenValue())) {
+        hash_table->set(token->getTokenValue(), token);
+    }
 }
 
-void TokenBuilder::setPosition(size_t line, size_t column) {
-    this->line_number_ = line;
-    this->column_number_ = column;
+bool Scope::lookUpCheck(const string &key) {
+    if (hash_table->lookUpCheck(key)) {
+        return true;
+    }
+    if (parent_scope->lookUpCheck(key)) {
+        return true;
+    }
+    return false;
 }
-
-void TokenBuilder::addValue(char value) {
-    this->token_value_.push_back(value);
-}
-
-void TokenBuilder::clearValue() {
-    this->token_value_.clear();
-}
-
-Token TokenBuilder::build() {
-    return Token(
-            token_type_,
-            token_value_,
-            line_number_,
-            column_number_
-            );
-}
- */

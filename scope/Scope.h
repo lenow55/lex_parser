@@ -3,24 +3,21 @@
 #include <cstddef>
 #include <string>
 #include <ostream>
+#include "HashMap.h"
+#include "Token.h"
 
 using std::string;
 using std::size_t;
 
 class Scope {
     private:
-        Scope *parent_scope_;
-        string token_value_;
-        size_t line_number_;
-        size_t column_number_;
+        Scope *parent_scope;
+        string level;
+        HashMap *hash_table;
     public:
-        Scope(TokenType token_type, const string& token_value,
-                size_t line_number, size_t column_number);
-        TokenType getTokenType() const;
-        const string &getTokenValue() const;
-        size_t getline() const;
-        size_t getcolumn() const;
-
+        Scope(Scope *, const string&);
+        ~Scope();
+        void storeToken(Token *);
+        bool lookUpCheck(const string&);
+        friend std::ostream &operator<<(std::ostream &os, const Scope &scope_);
 };
-
-std::ostream &operator<<(std::ostream &os, const Token &token_);
