@@ -89,7 +89,8 @@ void LexerContext::setFile(const string& filename) {
 }
 
 void LexerContext::storeToken() {
-    Token token = this->tokenBuilder->build();
+    Token *token = this->tokenBuilder->buildPTR();
+    this->currentScope->storeToken(token);
     // std::cout << token;
 }
 

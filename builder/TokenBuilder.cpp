@@ -27,3 +27,12 @@ Token TokenBuilder::build() {
             column_number_
             );
 }
+
+Token *TokenBuilder::buildPTR() {
+    return new Token(
+            token_type_,
+            token_value_,
+            line_number_,
+            column_number_
+            );
+}

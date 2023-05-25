@@ -37,4 +37,5 @@ class TokenBuilder {
         void addValue(char);
         void clearValue();
         Token build();
+        Token *buildPTR();
 };
