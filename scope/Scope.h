@@ -12,12 +12,18 @@ using std::size_t;
 class Scope {
     private:
         Scope *parent_scope;
-        string level;
+        size_t level;
+        size_t count_child;
+        size_t index;
         HashMap *hash_table;
     public:
-        Scope(Scope *, const string&);
+        Scope(Scope *, size_t, size_t);
         ~Scope();
         void storeToken(Token *);
         bool lookUpCheck(const string&);
-        friend std::ostream &operator<<(std::ostream &os, const Scope &scope_);
+        Scope *getParentScope();
+        size_t getLevel();
+        size_t getIndex();
+        void increaseIndex();
+        friend std::ostream &operator<<(std::ostream &, const Scope &);
 };

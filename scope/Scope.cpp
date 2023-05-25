@@ -2,8 +2,12 @@
 #include "Token.h"
 #include <cstddef>
 
-Scope::Scope(Scope *parent_, const string& level_) :
-    parent_scope(parent_), level(level_), hash_table(new HashMap){}
+Scope::Scope(Scope *parent_, size_t level_, size_t index_) :
+    parent_scope(parent_),
+    level(level_),
+    index(index_),
+    count_child(0),
+    hash_table(new HashMap){}
 
 void Scope::storeToken(Token *token) {
     if (!parent_scope->lookUpCheck(token->getTokenValue())) {
@@ -19,4 +23,30 @@ bool Scope::lookUpCheck(const string &key) {
         return true;
     }
     return false;
+}
+
+Scope *Scope::getParentScope() {
+    return parent_scope;
+}
+
+Scope::~Scope() {
+    delete hash_table;
+    parent_scope = nullptr;
+}
+
+size_t Scope::getLevel() {
+    return this->level;
+}
+size_t Scope::getIndex() {
+    return this->index;
+}
+
+void Scope::increaseIndex() {
+    ++this->index;
+}
+
+std::ostream &operator<<(std::ostream &os, const Scope &scope) {
+    os << "Level: " << scope.level << "-" << scope.index << '\n';
+    os << *(scope.hash_table);
+    return os;
 }
