@@ -4,9 +4,6 @@
 //#include <cstddef>
 //#include <string>
 //#include <ostream>
-//
-//using std::string;
-//using std::size_t;
 
 class Bucket {
     private:
@@ -16,6 +13,7 @@ class Bucket {
         bool emptySinceRemoval;
     public:
         Bucket();
+        ~Bucket();
         void set(const string &, Token*);
         void remove();
         bool isEmptySinceStart() const;
@@ -42,4 +40,5 @@ class HashMap {
         const Token *lookUp(const string &);
         bool lookUpCheck(const string &);
         void rehash();
+        friend std::ostream &operator<<(std::ostream &os, const HashMap &hashMap);
 };

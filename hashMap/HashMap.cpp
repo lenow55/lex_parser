@@ -9,6 +9,10 @@ Bucket::Bucket() :
     emptySinceStart(true),
     emptySinceRemoval(false) {}
 
+    Bucket::~Bucket() {
+        delete value;
+    }
+
 void Bucket::set(const string &key_, Token* value_) {
     this->key = key_;
     this->value = value_;
@@ -163,4 +167,15 @@ void HashMap::rehash() {
     }
 
     delete[] oldBuckets;
+}
+
+
+std::ostream &operator<<(std::ostream &os, const HashMap &hashMap) {
+    for (int i = 0; i < hashMap.capacity; i++) {
+        if (!hashMap.buckets[i].isEmpty()) {
+            os << "Hash: " << i
+                << ", Value: " << *(hashMap.buckets[i].getValue()) << "\n";
+        }
+    }
+    return os;
 }
