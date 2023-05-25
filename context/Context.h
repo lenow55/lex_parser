@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "Scope.h"
 #include "TokenBuilder.h"
 #include <cstddef>
 #include <fstream>
@@ -27,15 +28,18 @@ class LexerContext {
         char currentChar;         // Текущий символ
         std::unique_ptr<State> currentState;      // Текущее состояние
         TokenBuilder *tokenBuilder;
+        Scope *currentScope;
 
     public:
         LexerContext() :
             currentState(nullptr),
             tokenBuilder(nullptr),
             line(0),
-            column(0){}
+            column(0),
+            currentScope(new Scope(nullptr, 0, 0)){}
         ~LexerContext() {
             delete tokenBuilder;
+            delete currentScope;
         }
         void TransitionTo(State *, const char *);
         void setState(std::unique_ptr<State>);
@@ -54,5 +58,7 @@ class LexerContext {
         void storeToken();
         void initState();
         void closeFile();
+        void increaseScope();
+        void decreaseScope();
 };
 
